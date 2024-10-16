@@ -28,7 +28,7 @@ In this project, we use Wireshark to capture and analyze network traffic, focusi
   <img src="https://imgur.com/KvOh3Zd.png" height="70%" width="80%" alt="Disk Sanitization Steps"/>
   
 
-<h2><ins>2. Analyzing HTTP Traffic</ins></h2>
+<h3>Analyzing HTTP Traffic</h3>
 
 - Examine the HTTP GET and POST requests captured by Wireshark:
   - <b>GET</b>: Requests data from the server (e.g., retrieving a webpage).
@@ -53,7 +53,7 @@ In this project, we use Wireshark to capture and analyze network traffic, focusi
     <img src="https://i.imgur.com/kacqKSc.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
     <img src="https://i.imgur.com/3AJSspn.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
     
-<h2><ins>3. Capturing HTTPS Traffic</ins></h2>
+<h2><ins>2. Capturing HTTPS Traffic</ins></h2>
 
 - Start another capture and navigate to an HTTPS website (e.g., https://msn.com)
 - Stop the capture once sufficient traffic is generated.
@@ -62,7 +62,7 @@ In this project, we use Wireshark to capture and analyze network traffic, focusi
   <img src="https://i.imgur.com/BQeVwnH.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
   
 
-<h2><ins>4.Analyzing HTTPS Traffic</ins></h2>
+<h3>Analyzing HTTPS Traffic</h3>
 
 - While HTTPS encrypts the content, you can still analyze the TLS handshake process in Wireshark, which involves:
   - <b>Client Hello</b>: Client initiates the connection and proposes cryptographic options.
@@ -74,4 +74,26 @@ In this project, we use Wireshark to capture and analyze network traffic, focusi
    <img src="https://i.imgur.com/WM70aUy.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
    <img src="https://i.imgur.com/JcP1HGN.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
    <img src="https://i.imgur.com/ARjLhKg.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
+
+<h2><ins>3. Guided Lab: Decrypting RDP connections  </ins></h2>
+<h2>Project Description:</h2>
+In this lab, I'll be working with <b> Remote Desktop Protocol RDP</b> traffic. RDP is a protocol used for remotely connecting to Windows systems, i learn how to decrypt and analyze RDP traffic. If one has the required key utilized between the two hosts for encrypting the traffic and Wireshark can deobfuscate the traffic for us.<br/>
+
+<h2>Resoruce:</h2>
+
+- <b>RDP analysis zip file from Hack the box.
+- Private Key: To decrypt RDP traffic.</b>
+
+1. Open the rdp.pcapng file in Wireshark. --- Unzip the zip file included in the optional resources and open it in Wireshark.
+2. Analyze the traffic included. Take a minute to look at the traffic. Notice there is a lot of information here. We know our focus is on RDP, so let's take a second to filter on rdp and see what it returns. --- As it stands, not much can be seen, right? This is because RDP, by default, is utilizing TLS to encrypt the data, so we will not be able to see anything that happened with RDP traffic. How can we verify its existence in this file? One way is to filter on the well-known port RDP uses typically.
+3. Filter on port 3389 to determine if any RDP traffic encrypted or otherwise exists.
+ <img src="https://i.imgur.com/ARjLhKg.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>  --- We can at least verify that a session was established between the two hosts over TCP port 3389.
+4. Provide the RDP-key to Wireshark so it can decrypt the traffic.
+5. To apply the key in Wireshark:
+   - go to Edit → Preferences → Protocols → TLS
+   - On the TLS page, select Edit by RSA keys list → a new window will open.
+   - Import An RDP Key
   
+6. When filtering once again on RDP, we should see some traffic in the display.
+7. RDP In The Clear
+   - From here, we can perform an analysis of the RDP traffic. We can now follow TCP streams, export any potential objects found, and anything else we feel necessary for our investigation. This works because we acquired the RSA key used for encrypting the RDP session. The steps for acquiring the key were a bit lengthy, but the short of it is that if the RDP certificate is acquired from the server, OpenSSL can pull the private key out of it.
