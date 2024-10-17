@@ -89,7 +89,8 @@ In this lab, I'll be working with <b> Remote Desktop Protocol RDP</b> traffic. R
 1. <b>Open the rdp.pcapng file in Wireshark</b>: Unzip the zip file included in the optional resources and open it in Wireshark.
 	<img src="https://i.imgur.com/daUQVWn.png" height="100%" width="85%" alt="Disk Sanitization Steps"/>
 	<img src="https://i.imgur.com/eT1gjLe.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
-2. <b>Analyze the traffic included</b> Take a minute to look at the traffic. Notice there is a lot of information here. We know our focus is on RDP, so let's take a second to filter on rdp and see what it returns. 
+
+2. <b>Analyze the traffic:</b> Take a minute to look at the traffic. Notice there is a lot of information here. We know our focus is on RDP, so let's take a second to filter on rdp and see what it returns. 
 	<img src="https://i.imgur.com/rJ0cXKP.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
 	  - As it stands, not much can be seen, right? This is because RDP, by default, is utilizing TLS to encrypt the data, so we will not be able to see anything that happened with RDP traffic. How can we verify its existence in this file? One way is to filter on the well-known port RDP uses typically.
 
