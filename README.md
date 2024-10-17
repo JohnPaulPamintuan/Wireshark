@@ -84,16 +84,43 @@ In this lab, I'll be working with <b> Remote Desktop Protocol RDP</b> traffic. R
 - <b>RDP analysis zip file from Hack the box.
 - Private Key: To decrypt RDP traffic.</b>
 
-1. Open the rdp.pcapng file in Wireshark. --- Unzip the zip file included in the optional resources and open it in Wireshark.
-2. Analyze the traffic included. Take a minute to look at the traffic. Notice there is a lot of information here. We know our focus is on RDP, so let's take a second to filter on rdp and see what it returns. --- As it stands, not much can be seen, right? This is because RDP, by default, is utilizing TLS to encrypt the data, so we will not be able to see anything that happened with RDP traffic. How can we verify its existence in this file? One way is to filter on the well-known port RDP uses typically.
-3. Filter on port 3389 to determine if any RDP traffic encrypted or otherwise exists.
- <img src="https://i.imgur.com/ARjLhKg.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>  --- We can at least verify that a session was established between the two hosts over TCP port 3389.
-4. Provide the RDP-key to Wireshark so it can decrypt the traffic.
-5. To apply the key in Wireshark:
-   - go to Edit → Preferences → Protocols → TLS
-   - On the TLS page, select Edit by RSA keys list → a new window will open.
-   - Import An RDP Key
+<h2>Program walk-through::</h2>
+
+1. <b>Open the rdp.pcapng file in Wireshark</b>: Unzip the zip file included in the optional resources and open it in Wireshark.
+	<img src="https://i.imgur.com/daUQVWn.png" height="100%" width="85%" alt="Disk Sanitization Steps"/>
+	<img src="https://i.imgur.com/eT1gjLe.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
+2. <b>Analyze the traffic included</b> Take a minute to look at the traffic. Notice there is a lot of information here. We know our focus is on RDP, so let's take a second to filter on rdp and see what it returns. 
+	<img src="https://i.imgur.com/rJ0cXKP.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
+	  - As it stands, not much can be seen, right? This is because RDP, by default, is utilizing TLS to encrypt the data, so we will not be able to see anything that happened with RDP traffic. How can we verify its existence in this file? One way is to filter on the well-known port RDP uses typically.
+
+3. <b>Filter on port 3389 to determine if any RDP traffic encrypted or otherwise exists.</b>
+ 	<img src="https://i.imgur.com/DsruLla.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
+	- We can at least verify that a session was established between the two hosts over TCP port 3389.
+
+4. <b>Provide the RDP-key to Wireshark so it can decrypt the traffic.</b>
+
+   - <ins>To apply the key in Wireshark:</ins>
+  	 - go to Edit → Preferences → Protocols → TLS
+  	 - On the TLS page, select Edit by RSA keys list → a new window will open.
+   	 - Import An RDP Key
+   
+   	<img src="https://i.imgur.com/rk6SmnW.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
+ 	<img src="https://i.imgur.com/jnH0DcK.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
+  	<img src="https://i.imgur.com/sEBY27y.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
   
-6. When filtering once again on RDP, we should see some traffic in the display.
-7. RDP In The Clear
-   - From here, we can perform an analysis of the RDP traffic. We can now follow TCP streams, export any potential objects found, and anything else we feel necessary for our investigation. This works because we acquired the RSA key used for encrypting the RDP session. The steps for acquiring the key were a bit lengthy, but the short of it is that if the RDP certificate is acquired from the server, OpenSSL can pull the private key out of it.
+5. When filtering once again on RDP, we should see some traffic in the display. <b>RDP In The Clear</b>:
+	<img src="https://i.imgur.com/eK97jQw.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
+	
+   - From here, we can perform an <b>analysis of the RDP traffic</b>. We can now <ins>follow TCP streams</ins>, export any potential objects found, and anything else we feel necessary for our investigation. This works because we acquired the RSA key used for encrypting the RDP session.  
+	<img src="https://i.imgur.com/FjYqKWE.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
+
+<h2>Analysis:</h2>
+
+- The first packet of the three-way handshake, we can see the host who initiated the connection is 10.129.43.27. Which user account was used to initiate the RDP connection?
+- When filter on tcp.port == 3389, we can see a record labeled Ignored Unknown Record. If we examine the ASCII, it will show us a username.
+
+	<img src="https://i.imgur.com/T65Xojz.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
+
+<h2>Summary:</h2>
+
+- This lab was to serve as an example of what Wireshark can do with captured data and its plugins. Wireshark's capability to ingest information and illuminate the obscure is robust. Having the ability to decrypt data after ingestion is a powerful capability. This concept could be applied to any protocol that utilizes encryption as long as we have the key that will be utilized to establish the connections.
