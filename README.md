@@ -1,7 +1,7 @@
 <h1>Analyzing HTTP/S and RDP Traffic with Wireshark</h1> 
 
 <h2>Project Description:</h2>
-In this project, we use Wireshark to capture and analyze network traffic, focusing on HTTP/S (Hypertext Transfer Protocol/Secure) and RDP (Remote Desktop Protocol) traffic. The objective is to identify and dissect common web traffic, including both secure and insecure web communications, as well as monitor RDP sessions, which are often used for remote access to systems and can be a target for attacks.<br/>
+In this project, we use Wireshark to capture and analyze network traffic, focusing on <b>HTTP/S (Hypertext Transfer Protocol/Secure) and RDP (Remote Desktop Protocol) traffic</b>. The objective is to identify and dissect common web traffic, including both secure and insecure web communications, as well as monitor RDP sessions, which are often used for remote access to systems and can be a target for attacks.<br/>
 
 <h2>Tools Used:</h2>
 
@@ -11,14 +11,14 @@ In this project, we use Wireshark to capture and analyze network traffic, focusi
 
 <h1>Step-by-Step Implementation</h1>
 
-<h2><ins>1.HTTP Traffic Analysis</ins></h2>
+<h2><ins>1. HTTP Traffic Analysis</ins></h2>
 
 
 
 [linkedin]: https://linkedin.com/in/johnpaulpamintuan/</br>
 - Begin capturing traffic in Wireshark by clicking the blue Start Capture button </br><img width="22px" src="https://www.pngkit.com/png/detail/365-3657626_wireshark-icon.png"/> after selecting the network interface.
 - Open your browser and navigate to an HTTP website (e.g., http://example.com).
-- top the capture once sufficient traffic is generated.
+- Top the capture once sufficient traffic is generated.
 - Use the following filter in Wireshark to focus on HTTP traffic:
 
   <img src="https://i.imgur.com/7oKwmUF.png" height="70%" width="80%" alt="Disk Sanitization Steps"/>
@@ -28,7 +28,7 @@ In this project, we use Wireshark to capture and analyze network traffic, focusi
   <img src="https://imgur.com/KvOh3Zd.png" height="70%" width="80%" alt="Disk Sanitization Steps"/>
   
 
-<h3>Analyzing HTTP Traffic</h3>
+<h2>Analyzing HTTP traffic:</h2>
 
 - Examine the HTTP GET and POST requests captured by Wireshark:
   - <b>GET</b>: Requests data from the server (e.g., retrieving a webpage).
@@ -62,7 +62,7 @@ In this project, we use Wireshark to capture and analyze network traffic, focusi
   <img src="https://i.imgur.com/BQeVwnH.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
   
 
-<h3>Analyzing HTTPS Traffic</h3>
+<h2>Analyzing HTTPS traffic:</h2>
 
 - While HTTPS encrypts the content, you can still analyze the TLS handshake process in Wireshark, which involves:
   - <b>Client Hello</b>: Client initiates the connection and proposes cryptographic options.
@@ -79,12 +79,12 @@ In this project, we use Wireshark to capture and analyze network traffic, focusi
 <h2>Project Description:</h2>
 In this lab, I'll be working with <b> Remote Desktop Protocol RDP</b> traffic. RDP is a protocol used for remotely connecting to Windows systems, i learn how to decrypt and analyze RDP traffic. If one has the required key utilized between the two hosts for encrypting the traffic and Wireshark can deobfuscate the traffic for us.<br/>
 
-<h2>Resoruce:</h2>
+<h2>Resoruces:</h2>
 
 - <b>RDP analysis zip file from Hack the box.
 - Private Key: To decrypt RDP traffic.</b>
 
-<h2>Program walk-through::</h2>
+<h2>Program walk-through:</h2>
 
 1. <b>Open the rdp.pcapng file in Wireshark</b>: Unzip the zip file included in the optional resources and open it in Wireshark.
 	<img src="https://i.imgur.com/daUQVWn.png" height="100%" width="85%" alt="Disk Sanitization Steps"/>
@@ -118,7 +118,7 @@ In this lab, I'll be working with <b> Remote Desktop Protocol RDP</b> traffic. R
 <h2>Analysis:</h2>
 
 - The first packet of the three-way handshake, we can see the host who initiated the connection is 10.129.43.27. Which user account was used to initiate the RDP connection?
-- When filter on tcp.port == 3389, we can see a record labeled Ignored Unknown Record. If we examine the ASCII, it will show us a username.
+- When <b>filter on tcp.port == 3389</b>, we can see a record labeled Ignored Unknown Record. If we examine <ins>the ASCII</ins>, it will show us a username.
 
 	<img src="https://i.imgur.com/T65Xojz.png" height="120%" width="85%" alt="Disk Sanitization Steps"/>
 
